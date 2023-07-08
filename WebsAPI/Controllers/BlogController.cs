@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using System;
+using Business.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,10 +27,26 @@ namespace WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getallActive")]
-        public IActionResult GetAllActive()
+        [HttpGet("getCount")]
+        public IActionResult GetCount()
         {
-            var result = _blogService.GetListActive();
+            decimal result = _blogService.GetCount();
+            return Ok(result);
+        }
+        [HttpGet("getlast3post")]
+        public IActionResult GetLast3Post()
+        {
+            var result = _blogService.GetBlogDetailsLast3Post();
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpGet("getallActive")]
+        public IActionResult GetAllActive(int page)
+        {
+            var result = _blogService.GetListActive(page);
             if (result.Succes)
             {
                 return Ok(result);
@@ -39,6 +56,7 @@ namespace WebApi.Controllers
         [HttpPost("add")]
         public IActionResult Add(Blog blog)
         {
+            blog.BlogDate = DateTime.Parse(DateTime.Now.ToString("dd'/'MM'/'yyyy"));
             blog.BlogStatus = true;
             var result = _blogService.Add(blog);
             if (result.Succes)

@@ -4,6 +4,7 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,11 @@ namespace Business.Concrete
             _blogDal.Delete(blog);
             return new SuccesResult(Messages.UserNotFound);
         }
+        public IDataResult<List<BlogDetailsDto>> GetBlogDetails()
+        {
+
+            return new SuccesDataResult<List<BlogDetailsDto>>(_blogDal.GetBlogDetails(), Messages.ProductsListed);
+        }
 
         public IDataResult<Blog> GetById(int blogId)
         {
@@ -52,9 +58,23 @@ namespace Business.Concrete
         {
             return new SuccesDataResult<List<Blog>>(_blogDal.GetAll().ToList());
         }
-        public IDataResult<List<Blog>> GetListActive()
+        public IDataResult<List<Blog>> GetListActive(int page)
         {
-            return new SuccesDataResult<List<Blog>>(_blogDal.GetAll(x => x.BlogStatus == true).ToList());
+            int postCount = 6;
+            int skipCount = page * postCount;
+            return new SuccesDataResult<List<Blog>>(_blogDal.GetAll(x => x.BlogStatus == true).Skip(skipCount - 6).Take(postCount).ToList());
+        }
+      
+        public IDataResult<List<Blog>> GetBlogDetailsLast3Post()
+        {
+            return new SuccesDataResult<List<Blog>>(_blogDal.GetAll(x => x.BlogStatus == true).OrderByDescending(x => x.BlogId).Take(5).ToList(), Messages.PasswordError);
+        }
+        public decimal GetCount()
+        {
+            decimal productquantity = (_blogDal.GetAll(x => x.BlogStatus == true).GroupBy(x => x.BlogId).Count());
+            decimal pagequantity = productquantity / 6;
+            pagequantity = Math.Ceiling(pagequantity);
+            return pagequantity;
         }
 
         public IResult Update(Blog blog)
