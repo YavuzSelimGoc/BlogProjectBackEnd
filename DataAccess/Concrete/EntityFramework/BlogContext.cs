@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
             //              .Build();
             //    optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             //}
-            optionsBuilder.UseSqlServer(@"Data Source=94.73.170.34;Initial Catalog=u0919570_BlogPro; User Id=u0919570_user5E8;Password=B***********************;");
+            optionsBuilder.UseSqlServer(@"Data Source=94.73.170.34;Initial Catalog=u0919570_BlogPro; User Id=u0919570_user5E8;Password=BlogProjectBlogProject34;");
         }
 
         public DbSet<OperationClaim> OperationClaims { get; set; }
