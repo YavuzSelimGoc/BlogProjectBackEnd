@@ -20,8 +20,8 @@ namespace DataAccess.Concrete.EntityFramework
             //              .AddJsonFile("appsettings.json")
             //              .Build();
             //    optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            //}
-            optionsBuilder.UseSqlServer(@"Data Source=94.73.170.34;Initial Catalog=u0919570_BlogPro; User Id=u0919570_user5E8;Password=BlogProjectBlogProject34;");
+            //"Data Source=94.73.170.34;Initial Catalog=u0919570_BlogPro; User Id=u0919570_user5E8;Password=BlogProjectBlogProject34;"
+            optionsBuilder.UseSqlServer(@"Server=localhost,1433\\Catalog=TRYDB;Database=Blog;User=SA;Password=Password;Trusted_Connection=False;Encrypt=false;");
         }
 
         public DbSet<OperationClaim> OperationClaims { get; set; }

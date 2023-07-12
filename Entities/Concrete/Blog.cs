@@ -13,6 +13,7 @@ namespace Entities.Concrete
         public string BlogText { get; set; }
         public string BlogWriter { get; set; }
         public string BlogUrl { get; set; }
+        public string BlogFaq { get; set; }
         public string MetaDescription { get; set; }
         public string MetaTitle { get; set; }
         public DateTime BlogDate { get; set; }
