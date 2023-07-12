@@ -10,5 +10,9 @@ namespace DataAccess.Abstract
 	public interface IBlogDal : IEntityRepository<Blog>
     {
         List<BlogDetailsDto> GetBlogDetails();
+        List<BlogDetailsDto> GetBlogById(int blogId);
+        List<BlogDetailsDto> GetBlogDetailsActive();
+        List<BlogDetailsDto> GetBlogDetailsBySlug(string slug);
+        List<BlogDetailsDto> GetBlogDetailsByCategoryId(int categoryId);
     }
 }

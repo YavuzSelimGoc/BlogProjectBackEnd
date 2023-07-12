@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
             //              .Build();
             //    optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             //}
-            optionsBuilder.UseSqlServer(@"Server=localhost,1433\\Catalog=TRYDB;Database=Blog;User=SA;Password=Password;Trusted_Connection=False;Encrypt=false;");
+            optionsBuilder.UseSqlServer(@"Data Source=94.73.170.34;Initial Catalog=u0919570_BlogPro; User Id=u0919570_user5E8;Password=B***********************;");
         }
 
         public DbSet<OperationClaim> OperationClaims { get; set; }

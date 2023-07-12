@@ -14,6 +14,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
+using Core.Utilities.Business;
+using Entities.Concrete;
 
 namespace Business.Concrete
 {
@@ -21,11 +25,12 @@ namespace Business.Concrete
     {
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
-
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        IUserDal _userDal;
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IUserDal userDal)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
+            _userDal = userDal;
         }
         // [SecuredOperation("admin")]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -44,6 +49,10 @@ namespace Business.Concrete
             };
             _userService.Add(user);
             return new SuccesDataResult<User>(user, Messages.UserRegistered);
+        }
+        public IDataResult<List<User>> GetList()
+        {
+            return new SuccesDataResult<List<User>>(_userDal.GetAll().ToList());
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
@@ -106,6 +115,26 @@ namespace Business.Concrete
                 //Surname = kullaniciDetay.Soyad == null ? "" : kullaniciDetay.Soyad,
                 KullaniciId = user.Id
             };
+        }
+        public IResult Update(User user)
+        {
+            IResult result = BusinessRules.Run();
+            if (result != null)
+            {
+                return result;
+            }
+            _userDal.Update(user);
+            return new SuccesResult(Messages.UserRegistered);
+        }
+        public IResult Delete(User user)
+        {
+            IResult result = BusinessRules.Run();
+            if (result != null)
+            {
+                return result;
+            }
+            _userDal.Delete(user);
+            return new SuccesResult(Messages.UserNotFound);
         }
     }
 }

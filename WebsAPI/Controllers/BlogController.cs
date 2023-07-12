@@ -27,10 +27,32 @@ namespace WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpGet("GetByCategoryIdDto")]
+        public IActionResult GetByCategoryId(int categoryId,int page)
+        {
+            var result = _blogService.GetListByCategoryDto(categoryId,page);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
         [HttpGet("getCount")]
         public IActionResult GetCount()
         {
             decimal result = _blogService.GetCount();
+            return Ok(result);
+        }
+        [HttpGet("getCountActive")]
+        public IActionResult GetCountActive()
+        {
+            decimal result = _blogService.GetCount();
+            return Ok(result);
+        }
+        [HttpGet("getCountByCategory")]
+        public IActionResult getCountByCategory(int categoryId)
+        {
+            decimal result = _blogService.GetCountByCategory(categoryId);
             return Ok(result);
         }
         [HttpGet("getlast3post")]
@@ -53,6 +75,26 @@ namespace WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpGet("getBlogDto")]
+        public IActionResult GetAllDto(int page)
+        {
+            var result = _blogService.GetBlogDetailsDto(page);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpGet("getBlogActiveDto")]
+        public IActionResult GetAllActiveDto(int page)
+        {
+            var result = _blogService.GetBlogDetailsActiveDto(page);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
         [HttpPost("add")]
         public IActionResult Add(Blog blog)
         {
@@ -69,6 +111,37 @@ namespace WebApi.Controllers
         public IActionResult GetById(int id)
         {
             var result = _blogService.GetById(id);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("GetByIdDto")]
+        public IActionResult GetByIdDto(int id)
+        {
+            var result = _blogService.GetByIdDto(id);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        
+        [HttpGet("GetBySlugDto")]
+        public IActionResult GetBySlugDto(string slug)
+        {
+            var result = _blogService.GetListBySlugDto(slug);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("GetBySlug")]
+        public IActionResult GetBySlug(string slug)
+        {
+            var result = _blogService.GetBySlug(slug);
             if (result.Succes)
             {
                 return Ok(result);

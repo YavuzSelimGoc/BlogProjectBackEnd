@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Core.Entities.Concrete;
+using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,6 +38,16 @@ namespace WebsAPI.Controllers
 
             return BadRequest(result.Message);
         }
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            var result = _authService.GetList();
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
 
         [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
@@ -54,6 +66,27 @@ namespace WebsAPI.Controllers
             }
 
             return BadRequest(result.Message);
+        }
+        [HttpPost("update")]
+        public IActionResult Update(User user)
+        {
+            var result = _authService.Update(user);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("delete")]
+        public IActionResult Delete(User user)
+        {
+
+            var result = _authService.Delete(user);
+            if (result.Succes)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }
